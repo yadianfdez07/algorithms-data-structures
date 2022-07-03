@@ -1,11 +1,9 @@
 using Arrays;
-using System;
-using System.Diagnostics;
 using Xunit;
 
 namespace ArraysTests
 {
-    public class ArrayProblemSolverTests 
+    public class ArrayProblemSolverTests
     {
         ArrayProblemSolver sut;
         public ArrayProblemSolverTests()
@@ -136,7 +134,7 @@ namespace ArraysTests
         [Fact]
         public void ShouldRetrieveSubArraySumOf11()
         {
-            int[] expected = {  };
+            int[] expected = { };
             int[] source = { 1, 2, 3, 4, 5 };
             int sumValue = 11;
 
