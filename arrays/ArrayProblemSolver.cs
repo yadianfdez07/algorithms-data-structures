@@ -53,27 +53,86 @@ namespace Arrays
                         .ToArray();
         }
 
-        public int[] BubbleSort(int[] source)
+        public OperationOutput BubbleSort(int[] source, bool descending = false)
         {
-            // sort direction ascending or descending
-            // escape if already in order
+            int counter = 0;
 
-            int tmp;
             for (int i = 0; i < source.Length; i++)
             {
-                for (int j = 0; j < source.Length - 1; j++)
+                counter++;
+                bool swap = false;
+
+                if (!descending)
                 {
-                    if (source[j] > source[j + 1])
+                    for (int j = 0; j < source.Length - 1; j++)
                     {
-                        tmp = source[j + 1];
-                        source[j + 1] = source[j];
-                        source[j] = tmp;
+                        int tmp;
+
+                        if (source[j] > source[j + 1])
+                        {
+                            tmp = source[j + 1];
+                            source[j + 1] = source[j];
+                            source[j] = tmp;
+                            swap = true;
+                        }
                     }
+                }
+                else
+                {
+                    for (int j = 0; j < source.Length - 1; j++)
+                    {
+                        int tmp;
+
+                        if (source[j] < source[j + 1])
+                        {
+                            tmp = source[j + 1];
+                            source[j + 1] = source[j];
+                            source[j] = tmp;
+                            swap = true;
+                        }
+                    }
+                }
+
+                if (!swap)
+                {
+                    break;
                 }
             }
 
-            return source;
+            /*
+bool isNotSorted = true;
+do
+{
+    counter++;
+    isNotSorted = false;
+    for (int j = 0; j < source.Length - 1; j++)
+    {
+        int tmp;
+
+        if (source[j] > source[j + 1])
+        {
+            tmp = source[j + 1];
+            source[j + 1] = source[j];
+            source[j] = tmp;
+            isNotSorted = true;
+        }
+    }
+
+} while (isNotSorted);
+            */
+
+
+            return new OperationOutput { SortedArray = source, IterationCount = counter * source.Length, Optimized = counter != source.Length };
         }
 
+    }
+
+    public class OperationOutput
+    {
+        public int[] SortedArray { get; set; }
+
+        public int IterationCount { get; set; }
+
+        public bool Optimized { get; set; }
     }
 }

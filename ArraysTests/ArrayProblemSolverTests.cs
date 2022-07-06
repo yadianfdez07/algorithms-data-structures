@@ -144,28 +144,108 @@ namespace ArraysTests
         }
 
         [Fact]
-        public void ShouldSortArrayAscending()
+        public void ShouldSortArrayIsAscendingOrder()
         {
             int[] expected = { 1, 2, 3, 4, 5 };
-            int[] source = { 2, 4, 5, 1, 3 };
+            int[] source = { 4, 3, 2, 5, 1 };
 
-            var result = sut.BubbleSort(source);
+            var operationResult = sut.BubbleSort(source);
 
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, operationResult.SortedArray);
+            Assert.Equal(25, operationResult.IterationCount);
+            Assert.False(operationResult.Optimized);
 
         }
 
         [Fact]
-        public void ShouldSortAnotherArrayAscending()
+        public void ShouldSortIsAscendingOrderWithLessIterationsWhenPossible()
         {
             int[] expected = { 1, 4, 7, 8, 9 };
             int[] source = { 8, 9, 1, 4, 7 };
 
-            var result = sut.BubbleSort(source);
+            var operationResult = sut.BubbleSort(source);
 
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, operationResult.SortedArray);
+            Assert.Equal(15, operationResult.IterationCount);
+            Assert.True(operationResult.Optimized);
 
         }
 
+        [Fact]
+        public void ShouldIterateOnlyOnceWhenArrayIsSorted()
+        {
+            // arrange
+            int[] expected = { 1, 2, 3, 4, 5 };
+            int[] source = { 1, 2, 3, 4, 5 };
+
+            // act
+            var operationResult = sut.BubbleSort(source);
+
+            // assert
+            Assert.Equal(expected, operationResult.SortedArray);
+            Assert.Equal(5, operationResult.IterationCount);
+            Assert.True(operationResult.Optimized);
+        }
+
+        [Fact]
+        public void ShouldIterateOnlyOnceWhenArrayIsSortedInDescendingOrder()
+        {
+            // arrange
+            int[] expected = { 5, 4, 3, 2, 1 };
+            int[] source = { 5, 4, 3, 2, 1 };
+
+            // act
+            var operationResult = sut.BubbleSort(source, true);
+
+            // assert
+            Assert.Equal(expected, operationResult.SortedArray);
+            Assert.Equal(5, operationResult.IterationCount);
+            Assert.True(operationResult.Optimized);
+        }
+
+        [Fact]
+        public void ShouldSortArrayInDescendingOrder()
+        {
+            // arrange
+            int[] expected = { 5, 4, 3, 2, 1 };
+            int[] source = { 1, 2, 3, 4, 5 };
+
+
+            // act
+            var operationResult = sut.BubbleSort(source, true);
+
+            // assert
+            Assert.Equal(expected, operationResult.SortedArray);
+            Assert.Equal(25, operationResult.IterationCount);
+            Assert.False(operationResult.Optimized);
+        }
+
+        [Fact]
+        public void ShouldSortInDescendingOrderOrderWithLessIterationsWhenPossible()
+        {
+            int[] expected = { 9, 8, 7, 4, 1 };
+            int[] source = { 8, 9, 1, 4, 7 };
+
+            var operationResult = sut.BubbleSort(source, true);
+
+            Assert.Equal(expected, operationResult.SortedArray);
+            Assert.Equal(15, operationResult.IterationCount);
+            Assert.True(operationResult.Optimized);
+
+        }
+
+        [Fact]
+        public void ShouldSortInDescendingOrderOrderWithLessIterationsWhenPossibleWithDuplicates()
+        {
+            int[] expected = { 9, 8, 7, 7, 4, 1 };
+            int[] source = { 8, 9, 7, 1, 4, 7 };
+
+            var operationResult = sut.BubbleSort(source, true);
+
+            Assert.Equal(expected, operationResult.SortedArray);
+            Assert.Equal(18, operationResult.IterationCount);
+            Assert.True(operationResult.Optimized);
+
+        }
     }
 }
